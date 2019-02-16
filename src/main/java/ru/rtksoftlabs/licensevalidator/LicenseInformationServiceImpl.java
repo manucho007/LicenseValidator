@@ -10,4 +10,14 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
     public License getLicenseInformation() {
         return null;
     }
+
+    @Override
+    public SignedLicenseContainer getNewSignedLicenseContainer() {
+        return null;
+    }
+
+    @Override
+    public boolean installLicense(byte[] zipBytes) {
+        return false;
+    }
 }
