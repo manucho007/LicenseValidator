@@ -14,9 +14,6 @@ public class License {
 
     private List<ProtectedObject> protectedObjects;
 
-    public License() {
-    }
-
     public LocalDate getBeginDate() {
         return beginDate;
     }

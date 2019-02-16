@@ -90,7 +90,6 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
 
             return false;
         } catch (IOException | GeneralSecurityException e) {
-            //e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
     }
