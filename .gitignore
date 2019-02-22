@@ -1,6 +1,11 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
+*.lic
+*.sign
+*.zip
+*.cert
+*.crt
 
 ### STS ###
 .apt_generated
