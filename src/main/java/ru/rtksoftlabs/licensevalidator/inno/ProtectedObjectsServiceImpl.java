@@ -17,7 +17,7 @@ public class ProtectedObjectsServiceImpl implements ProtectedObjectsService {
     public List<ProtectedObject> getProtectedObjects() {
         List<ProtectedObject> protectedObjects = new ArrayList<>();
 
-        Map<String, String> components = new HashMap<>();
+        Map<String, List<ProtectedObject>> components = new HashMap<>();
 
         components.put("idComponent1", "nameComponent1");
         components.put("idComponent2", "nameComponent2");
