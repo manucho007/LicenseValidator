@@ -1,23 +1,31 @@
 buildscript {
     ext {
         springBootVersion = '2.1.2.RELEASE'
+        set('springCloudVersion', 'Greenwich.RELEASE')
+        set('springCloudContractVersion', '2.1.0.RELEASE')
     }
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springCloudContractVersion}"
+        classpath "com.adarshr:gradle-test-logger-plugin:1.6.0"
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'war'
+apply plugin: 'spring-cloud-contract'
+apply plugin: "com.adarshr.test-logger"
 
 group = 'ru.rtksoftlabs'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
@@ -25,12 +33,23 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     compile("org.springframework.boot:spring-boot-starter-actuator")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 bootRun {
     String activeProfile = System.properties['spring.profiles.active']
     systemProperty "spring.profiles.active", activeProfile
+}
+
+contracts {
+    baseClassForTests = 'ru.rtksoftlabs.licensevalidator.CheckAccessControllerBase'
 }

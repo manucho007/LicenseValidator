@@ -55,4 +55,14 @@ public class License {
 
         return mapper.writeValueAsString(this);
     }
+
+    public boolean find(ProtectedObject protectedObject) {
+        for (ProtectedObject protectedObjectInLicense: protectedObjects) {
+            if (protectedObjectInLicense.data.equals(protectedObject.data)) {
+                return protectedObjectInLicense.find(protectedObject);
+            }
+        }
+
+        return false;
+    }
 }

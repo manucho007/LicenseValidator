@@ -45,21 +45,17 @@ public class ProtectedObject {
         return listOfStringsWithPathToAllLeafs;
     }
 
-    public List<String> getListOfStringsWithPathToAllLeafs() {
+    public List<String> returnListOfStringsWithPathToAllLeafs() {
+        if (listOfStringsWithPathToAllLeafs == null) {
+            generateListOfAllPathsToLeafs(this, data);
+        }
+
         return listOfStringsWithPathToAllLeafs;
     }
 
     public boolean find(ProtectedObject protectedObject) {
-        if(listOfStringsWithPathToAllLeafs == null) {
-            generateListOfAllPathsToLeafs(this, data);
-        }
+        List<String> otherList = protectedObject.returnListOfStringsWithPathToAllLeafs();
 
-        if (protectedObject.getListOfStringsWithPathToAllLeafs() == null) {
-            protectedObject.generateListOfAllPathsToLeafs(protectedObject, protectedObject.data);
-        }
-
-        List<String> otherList = protectedObject.getListOfStringsWithPathToAllLeafs();
-
-        return listOfStringsWithPathToAllLeafs.containsAll(otherList);
+        return returnListOfStringsWithPathToAllLeafs().containsAll(otherList);
     }
 }
