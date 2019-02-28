@@ -1,5 +1,6 @@
 package ru.rtksoftlabs.licensevalidator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -35,6 +36,21 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
     @Value("${signature.inner.file.name}")
     String signatureInnerFileName;
 
+    private License mapToObject(byte[] licenseBytes) throws IOException {
+        return mapToObject(new String(licenseBytes));
+    }
+
+    private License mapToObject(String licenseString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+
+        return mapper.readValue(licenseString, License.class);
+    }
+
     @PostConstruct
     public void loadLicense() {
         try {
@@ -48,12 +64,7 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
             signedLicenseContainer.setSign(signatureBytes);
 
             if (validateLicense(signedLicenseContainer)) {
-                ObjectMapper mapper = new ObjectMapper();
-
-                mapper.registerModule(new JavaTimeModule());
-                mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-                License license = mapper.readValue(new String(licenseBytes), License.class);
+                License license = mapToObject(licenseBytes);
 
                 if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
                     licenseInformationData.setLicense(license);
@@ -93,12 +104,7 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
         if (validateLicense(signedLicenseContainer)) {
             String jsonString = new String(signedLicenseContainer.getLicense());
 
-            ObjectMapper mapper = new ObjectMapper();
-
-            mapper.registerModule(new JavaTimeModule());
-            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-            License license = mapper.readValue(jsonString, License.class);
+            License license = mapToObject(jsonString);
 
             if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
                 licenseInformationData.setLicense(license);
