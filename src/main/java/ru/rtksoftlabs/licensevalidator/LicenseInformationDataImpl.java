@@ -5,20 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("default")
-public class LicenseInformationDataImpl implements LicenseInformationData {
-    private License license;
+public class LicenseInformationDataImpl extends LicenseInformationDataImplBase {
 
-    public LicenseInformationDataImpl() {
-        license = new License();
-    }
-
-    @Override
-    public License getLicense() {
-        return license;
-    }
-
-    @Override
-    public void setLicense(License license) {
-        this.license = license;
-    }
 }

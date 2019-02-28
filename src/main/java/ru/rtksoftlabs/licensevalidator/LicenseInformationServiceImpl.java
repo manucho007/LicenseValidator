@@ -15,19 +15,19 @@ import java.security.cert.Certificate;
 @Service
 public class LicenseInformationServiceImpl implements LicenseInformationService {
     @Autowired
-    ProtectedObjectsService protectedObjectsService;
+    private SignatureService signatureService;
 
     @Autowired
-    SignatureService signatureService;
+    private ZipLicenseService zipLicenseService;
 
     @Autowired
-    ZipLicenseService zipLicenseService;
+    private FileService fileService;
 
     @Autowired
-    FileService fileService;
+    private LicenseInformationData licenseInformationData;
 
     @Autowired
-    LicenseInformationData licenseInformationData;
+    private CheckAccessService checkAccessService;
 
     @Value("${license.inner.file.name}")
     String licenseInnerFileName;
@@ -53,7 +53,11 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
                 mapper.registerModule(new JavaTimeModule());
                 mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-                licenseInformationData.setLicense(mapper.readValue(new String(licenseBytes), License.class));
+                License license = mapper.readValue(new String(licenseBytes), License.class);
+
+                if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
+                    licenseInformationData.setLicense(license);
+                }
             }
         } catch (IOException | RuntimeException e) {
 
@@ -73,23 +77,7 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
         try {
             Certificate certificate = signatureService.loadCertificate();
 
-            if (signatureService.verify(signedLicenseContainer.getLicense(), signedLicenseContainer.getSign(), certificate)) {
-                String jsonString = new String(signedLicenseContainer.getLicense());
-
-                ObjectMapper mapper = new ObjectMapper();
-
-                mapper.registerModule(new JavaTimeModule());
-                mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-                licenseInformationData.setLicense(mapper.readValue(jsonString, License.class));
-
-                fileService.save(signedLicenseContainer.getLicense(), licenseInnerFileName);
-                fileService.save(signedLicenseContainer.getSign(), signatureInnerFileName);
-
-                return true;
-            }
-
-            return false;
+            return signatureService.verify(signedLicenseContainer.getLicense(), signedLicenseContainer.getSign(), certificate);
         } catch (IOException | GeneralSecurityException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -102,6 +90,26 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
 
         zipLicenseService.unzipLicense(signedLicenseContainer);
 
-        return validateLicense(signedLicenseContainer);
+        if (validateLicense(signedLicenseContainer)) {
+            String jsonString = new String(signedLicenseContainer.getLicense());
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            mapper.registerModule(new JavaTimeModule());
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+            License license = mapper.readValue(jsonString, License.class);
+
+            if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
+                licenseInformationData.setLicense(license);
+
+                fileService.save(signedLicenseContainer.getLicense(), licenseInnerFileName);
+                fileService.save(signedLicenseContainer.getSign(), signatureInnerFileName);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
