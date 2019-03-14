@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CheckAccessServiceImpl implements CheckAccessService {
@@ -25,26 +28,40 @@ public class CheckAccessServiceImpl implements CheckAccessService {
         return false;
     }
 
-    private boolean find(ProtectedObject protectedObject) {
-        String appName = protectedObject.data;
+    private boolean find(String protectedObject) {
+        Pattern patt = Pattern.compile("^(.*?)/");
+        Matcher matcher = patt.matcher(protectedObject);
+
+        String appName = "";
+
+        if (matcher.find()) {
+            appName = matcher.group(1);
+        }
 
         List<String> pathesToLeafs = licenseInformationData.getProtectedObjects().get(appName);
 
         if (pathesToLeafs != null) {
-            return pathesToLeafs.containsAll(protectedObject.returnListOfStringsWithPathToAllLeafs());
+            List<String> listOfStringsWithPathToAllLeafs = new ArrayList<>();
+            listOfStringsWithPathToAllLeafs.add(protectedObject);
+
+            return pathesToLeafs.containsAll(listOfStringsWithPathToAllLeafs);
         }
 
         return false;
     }
 
-    @Override
-    public boolean checkAccess(ProtectedObject protectedObject) {
+    private boolean checkDates() {
         ConcurrentMap<String, LocalDate> licenseDates = licenseInformationData.getLicenseDates();
 
         LocalDate beginDate = licenseDates.get("beginDate");
         LocalDate endDate = licenseDates.get("endDate");
 
-        if (checkLicenseDates(beginDate, endDate)) {
+        return checkLicenseDates(beginDate, endDate);
+    }
+
+    @Override
+    public boolean checkAccess(String protectedObject) {
+        if (checkDates()) {
             return find(protectedObject);
         }
 
