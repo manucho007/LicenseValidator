@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Base64;
-import java.util.List;
 
 public class Response {
     private boolean response;
@@ -35,33 +34,23 @@ public class Response {
         this.hash = hash;
     }
 
-    public byte[] generateHash(ProtectedObject protectedObject) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+    public byte[] generateHash(String protectedObject) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
 
         String saltString = "RtKDec78";
 
-        String saltArrayString = "RecS9";
+        String stringToEncrypt = protectedObject.replace("/", "");
 
-        List<String> stringPathList = protectedObject.returnListOfStringsWithPathToAllLeafs();
+        stringToEncrypt += response;
 
-        String stringToEncrypt = timestamp.toString();
+        stringToEncrypt += timestamp.toString();
 
-        char[] stringPathArray = stringPathList.get(0).toCharArray();
-
-        if (stringPathList.size() > 0) {
-            for (int i = 0; i < stringPathArray.length; i+=2) {
-                stringToEncrypt += saltArrayString + stringPathArray[i];
-            }
-        }
-
-        stringToEncrypt += saltString + response;
+        stringToEncrypt += saltString;
 
         messageDigest.update(stringToEncrypt.getBytes());
 
         byte[] returnBytes = Base64.getEncoder().encode(messageDigest.digest());
 
-        String returnString = new String(returnBytes);
-
-        return Base64.getEncoder().encode(messageDigest.digest());
+        return returnBytes;
     }
 }

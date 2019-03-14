@@ -31,15 +31,15 @@ public class ResponseTest {
 
         ProtectedObject protectedObject = protectedObjectsService.getProtectedObjects().get(0);
 
-        byte[] generatedHash = response.generateHash(protectedObject);
+        byte[] generatedHash = response.generateHash(protectedObject.returnListOfStringsWithPathToAllLeafs().get(0));
 
         Response expectedResponse = new Response();
 
         expectedResponse.setTimestamp(instant);
 
-        response.setResponse(true);
+        expectedResponse.setResponse(true);
 
-        byte[] expectedHash = expectedResponse.generateHash(protectedObject);
+        byte[] expectedHash = expectedResponse.generateHash(protectedObject.returnListOfStringsWithPathToAllLeafs().get(0));
 
         assertThat(generatedHash).isEqualTo(expectedHash);
     }
