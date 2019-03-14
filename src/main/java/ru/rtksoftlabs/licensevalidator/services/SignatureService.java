@@ -1,4 +1,6 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
+
+import ru.rtksoftlabs.licensevalidator.util.Keys;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

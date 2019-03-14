@@ -1,8 +1,9 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.rtksoftlabs.licensevalidator.util.Keys;
 import sun.security.x509.*;
 
 import java.io.*;

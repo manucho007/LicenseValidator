@@ -2,8 +2,8 @@ package ru.rtksoftlabs.licensevalidator.inno;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import ru.rtksoftlabs.licensevalidator.ProtectedObject;
-import ru.rtksoftlabs.licensevalidator.ProtectedObjectsService;
+import ru.rtksoftlabs.licensevalidator.shared.ProtectedObject;
+import ru.rtksoftlabs.licensevalidator.services.ProtectedObjectsService;
 
 import java.util.ArrayList;
 import java.util.List;

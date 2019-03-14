@@ -1,7 +1,9 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
+import ru.rtksoftlabs.licensevalidator.util.License;
 
 import java.io.IOException;
 

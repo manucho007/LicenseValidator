@@ -1,7 +1,8 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

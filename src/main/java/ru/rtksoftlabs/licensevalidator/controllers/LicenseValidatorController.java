@@ -1,9 +1,11 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import ru.rtksoftlabs.licensevalidator.services.LicenseInformationService;
+import ru.rtksoftlabs.licensevalidator.util.License;
 
 import java.io.IOException;
 import java.util.Map;

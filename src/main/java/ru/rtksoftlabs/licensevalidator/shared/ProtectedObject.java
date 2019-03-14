@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.shared;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,4 +1,6 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.util;
+
+import ru.rtksoftlabs.licensevalidator.shared.ProtectedObject;
 
 import java.time.LocalDate;
 import java.util.List;

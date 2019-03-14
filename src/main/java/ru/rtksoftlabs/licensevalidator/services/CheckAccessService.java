@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import java.time.LocalDate;
 

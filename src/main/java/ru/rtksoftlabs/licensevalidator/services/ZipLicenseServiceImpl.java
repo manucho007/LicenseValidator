@@ -1,6 +1,7 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import org.springframework.stereotype.Service;
+import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

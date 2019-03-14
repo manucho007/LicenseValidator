@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.shared;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

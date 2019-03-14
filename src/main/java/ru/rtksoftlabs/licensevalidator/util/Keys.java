@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.util;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;

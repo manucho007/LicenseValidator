@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator;
+package ru.rtksoftlabs.licensevalidator.services;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
+import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationData;
+import ru.rtksoftlabs.licensevalidator.util.License;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
