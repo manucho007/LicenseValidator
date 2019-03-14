@@ -9,8 +9,6 @@ public class ProtectedObject {
 
     public String data;
 
-    private ProtectedObject parent;
-
     public List<ProtectedObject> children;
 
     public ProtectedObject() {
@@ -23,7 +21,6 @@ public class ProtectedObject {
 
     public ProtectedObject addChild(String child) {
         ProtectedObject childNode = new ProtectedObject(child);
-        childNode.parent = this;
         this.children.add(childNode);
         return childNode;
     }
