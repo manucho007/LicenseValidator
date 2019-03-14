@@ -6,6 +6,7 @@
 *.zip
 *.cert
 *.crt
+/logs/
 
 ### STS ###
 .apt_generated
