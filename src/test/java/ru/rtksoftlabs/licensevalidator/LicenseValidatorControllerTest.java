@@ -48,7 +48,7 @@ public class LicenseValidatorControllerTest {
     @Autowired
     private ProtectedObjectsService protectedObjectsService;
 
-    License license;
+    private License license;
 
     @Before
     public void before() {
