@@ -28,14 +28,16 @@ public class ProtectedObject {
     public List<String> generateListOfAllPathsToLeafs(ProtectedObject node, String accumulator) {
         listOfStringsWithPathToAllLeafs = new ArrayList<>();
 
-        for (ProtectedObject child: node.children) {
-            String elem = accumulator;
-            elem += "/" + child.data;
+        if (node.children != null) {
+            for (ProtectedObject child : node.children) {
+                String elem = accumulator;
+                elem += "/" + child.data;
 
-            if ((child.children != null) && (child.children.size() > 0)) {
-                generateListOfAllPathsToLeafs(child, elem);
-            } else {
-                listOfStringsWithPathToAllLeafs.add(elem);
+                if ((child.children != null) && (child.children.size() > 0)) {
+                    generateListOfAllPathsToLeafs(child, elem);
+                } else {
+                    listOfStringsWithPathToAllLeafs.add(elem);
+                }
             }
         }
 
