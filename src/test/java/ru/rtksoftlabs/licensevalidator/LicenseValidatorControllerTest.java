@@ -1,8 +1,5 @@
 package ru.rtksoftlabs.licensevalidator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,12 +62,7 @@ public class LicenseValidatorControllerTest {
 
     @Test
     public void getLicenseInformationShouldReturnObjects() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        String content = mapper.writeValueAsString(license);
+        String content = licenseInformationService.getJsonMapper().writeValueAsString(license);
 
         mockMvc.perform(get("/api/license-information")
                 .accept(MediaType.APPLICATION_JSON))
@@ -84,7 +76,7 @@ public class LicenseValidatorControllerTest {
 
         Mockito.when(licenseInformationService.getNewSignedLicenseContainer()).thenReturn(signedLicenseContainerTest);
 
-        byte[] licenseBytes = license.toJson().getBytes();
+        byte[] licenseBytes = licenseInformationService.toJson(license).getBytes();
 
         KeyPair keyPair = signatureService.generateKeyPair();
 
@@ -115,7 +107,7 @@ public class LicenseValidatorControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/api/install-license")
                 .file(firstFile).contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(license.toJson()))
+                .andExpect(content().json(licenseInformationService.toJson(license)))
                 .andExpect(status().isOk());
     }
 }

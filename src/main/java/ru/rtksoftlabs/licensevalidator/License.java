@@ -1,10 +1,5 @@
 package ru.rtksoftlabs.licensevalidator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,14 +40,5 @@ public class License {
                 ", endDate=" + endDate +
                 ", protectedObjects=" + protectedObjects +
                 '}';
-    }
-
-    public String toJson() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        return mapper.writeValueAsString(this);
     }
 }

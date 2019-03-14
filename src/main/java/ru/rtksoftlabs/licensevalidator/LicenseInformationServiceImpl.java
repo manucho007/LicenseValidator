@@ -1,6 +1,7 @@
 package ru.rtksoftlabs.licensevalidator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -32,7 +33,12 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
         return mapToObject(new String(licenseBytes));
     }
 
-    public License mapToObject(String licenseString) throws IOException {
+    public String toJson(License license) throws JsonProcessingException {
+        return getJsonMapper().writeValueAsString(license);
+    }
+
+    @Override
+    public ObjectMapper getJsonMapper() {
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.registerModule(new JavaTimeModule());
@@ -40,7 +46,11 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
 
         mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 
-        return mapper.readValue(licenseString, License.class);
+        return mapper;
+    }
+
+    public License mapToObject(String licenseString) throws IOException {
+        return getJsonMapper().readValue(licenseString, License.class);
     }
 
     public SignedLicenseContainer getNewSignedLicenseContainer() {
