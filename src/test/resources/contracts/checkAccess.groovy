@@ -2,12 +2,8 @@ package contracts
 
 org.springframework.cloud.contract.spec.Contract.make {
     request {
-        method 'POST'
-        url '/api/check-access'
-        body("""{"data": "App1","children": [{"data": "Scripts","children": [{"data": "sc1"}]}]}""")
-        headers {
-            header('Content-Type', 'application/json')
-        }
+        method 'GET'
+        url '/api/check-access/App1/Scripts/sc1'
     }
     response {
         status 200
