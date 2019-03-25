@@ -34,10 +34,10 @@ public class CheckAccessController {
 
         response.setTimestamp(Instant.now());
 
-        response.setResponse(false);
+        response.setAccess(false);
 
         if (checkAccessService.checkAccess(protectedObject)) {
-            response.setResponse(true);
+            response.setAccess(true);
         }
 
         response.setHash(response.generateHash(protectedObject));

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,5 +25,9 @@ public class FileServiceImpl implements FileService {
 
     public FileInputStream loadInputStream(String fileName) throws FileNotFoundException {
         return new FileInputStream(fileName);
+    }
+
+    public FileOutputStream saveOutputStream(String fileName) throws FileNotFoundException {
+        return new FileOutputStream(fileName);
     }
 }

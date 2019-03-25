@@ -6,16 +6,16 @@ import java.time.Instant;
 import java.util.Base64;
 
 public class Response {
-    private boolean response;
+    private boolean access;
     private Instant timestamp;
     private byte[] hash;
 
-    public boolean isResponse() {
-        return response;
+    public boolean isAccess() {
+        return access;
     }
 
-    public void setResponse(boolean response) {
-        this.response = response;
+    public void setAccess(boolean access) {
+        this.access = access;
     }
 
     public Instant getTimestamp() {
@@ -41,7 +41,7 @@ public class Response {
 
         String stringToEncrypt = protectedObject.replace("/", "");
 
-        stringToEncrypt += response;
+        stringToEncrypt += access;
 
         stringToEncrypt += timestamp.toString();
 
@@ -49,8 +49,6 @@ public class Response {
 
         messageDigest.update(stringToEncrypt.getBytes());
 
-        byte[] returnBytes = Base64.getEncoder().encode(messageDigest.digest());
-
-        return returnBytes;
+        return Base64.getEncoder().encode(messageDigest.digest());
     }
 }

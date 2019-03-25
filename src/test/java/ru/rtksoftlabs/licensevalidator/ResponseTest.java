@@ -30,7 +30,7 @@ public class ResponseTest {
 
         response.setTimestamp(instant);
 
-        response.setResponse(true);
+        response.setAccess(true);
 
         ProtectedObject protectedObject = protectedObjectsService.getProtectedObjects().get(0);
 
@@ -40,7 +40,7 @@ public class ResponseTest {
 
         expectedResponse.setTimestamp(instant);
 
-        expectedResponse.setResponse(true);
+        expectedResponse.setAccess(true);
 
         byte[] expectedHash = expectedResponse.generateHash(protectedObject.returnListOfStringsWithPathToAllLeafs().get(0));
 

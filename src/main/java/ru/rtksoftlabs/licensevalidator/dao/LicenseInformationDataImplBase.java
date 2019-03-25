@@ -102,7 +102,7 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
             licenseDates.put("endDate", license.getEndDate());
 
             for (ProtectedObject protectedObject: license.getProtectedObjects()) {
-                protectedObjects.put(protectedObject.data, protectedObject.returnListOfStringsWithPathToAllLeafs());
+                protectedObjects.put(protectedObject.getData(), protectedObject.returnListOfStringsWithPathToAllLeafs());
             }
 
             this.license.setBeginDate(license.getBeginDate());

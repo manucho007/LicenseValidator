@@ -7,9 +7,9 @@ import java.util.List;
 public class ProtectedObject {
     private List<String> listOfStringsWithPathToAllLeafs;
 
-    public String data;
+    private String data;
 
-    public List<ProtectedObject> children;
+    private List<ProtectedObject> children;
 
     public ProtectedObject() {
     }
@@ -17,6 +17,14 @@ public class ProtectedObject {
     public ProtectedObject(String data) {
         this.data = data;
         this.children = new LinkedList<>();
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public List<ProtectedObject> getChildren() {
+        return children;
     }
 
     public ProtectedObject addChild(String child) {
