@@ -55,6 +55,10 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
+jacoco {
+    toolVersion = "0.8.3"
+}
+
 contracts {
     baseClassForTests = 'ru.rtksoftlabs.licensevalidator.CheckAccessControllerBase'
 }
