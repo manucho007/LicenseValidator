@@ -15,9 +15,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.rtksoftlabs.LicenseCommons.services.FileService;
+import ru.rtksoftlabs.LicenseCommons.services.ProtectedObjectsService;
+import ru.rtksoftlabs.LicenseCommons.services.SignatureService;
+import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
+import ru.rtksoftlabs.LicenseCommons.util.License;
+import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.services.*;
-import ru.rtksoftlabs.licensevalidator.util.License;
-import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
 
 import java.security.KeyPair;
 import java.security.KeyStore;

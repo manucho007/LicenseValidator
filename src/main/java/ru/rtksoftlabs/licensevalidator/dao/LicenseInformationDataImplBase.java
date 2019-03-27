@@ -2,12 +2,12 @@ package ru.rtksoftlabs.licensevalidator.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import ru.rtksoftlabs.LicenseCommons.services.FileService;
+import ru.rtksoftlabs.LicenseCommons.shared.ProtectedObject;
+import ru.rtksoftlabs.LicenseCommons.util.License;
+import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.services.LicenseInformationService;
-import ru.rtksoftlabs.licensevalidator.shared.ProtectedObject;
-import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.services.CheckAccessService;
-import ru.rtksoftlabs.licensevalidator.services.FileService;
-import ru.rtksoftlabs.licensevalidator.util.License;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

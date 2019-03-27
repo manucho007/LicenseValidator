@@ -7,9 +7,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.rtksoftlabs.licensevalidator.util.SignedLicenseContainer;
+import ru.rtksoftlabs.LicenseCommons.services.FileService;
+import ru.rtksoftlabs.LicenseCommons.services.SignatureService;
+import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
+import ru.rtksoftlabs.LicenseCommons.util.License;
+import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationData;
-import ru.rtksoftlabs.licensevalidator.util.License;
 
 import java.io.*;
 import java.security.GeneralSecurityException;

@@ -1,6 +1,6 @@
 package ru.rtksoftlabs.licensevalidator.dao;
 
-import ru.rtksoftlabs.licensevalidator.util.License;
+import ru.rtksoftlabs.LicenseCommons.util.License;
 
 import java.time.LocalDate;
 import java.util.List;

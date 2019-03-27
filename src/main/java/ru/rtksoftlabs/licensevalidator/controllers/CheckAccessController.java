@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
+import ru.rtksoftlabs.LicenseCommons.shared.ResponseSignUtil;
 import ru.rtksoftlabs.licensevalidator.services.CheckAccessService;
-import ru.rtksoftlabs.licensevalidator.shared.Response;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
@@ -27,21 +27,15 @@ public class CheckAccessController {
     }
 
     @GetMapping(value = "/check-access/**")
-    public Response checkAccess(final HttpServletRequest request) throws NoSuchAlgorithmException {
+    public ResponseSignUtil checkAccess(final HttpServletRequest request) throws NoSuchAlgorithmException {
         String protectedObject = getProtectedObjectFromPath(request);
 
-        Response response = new Response();
-
-        response.setTimestamp(Instant.now());
-
-        response.setAccess(false);
+        boolean access = false;
 
         if (checkAccessService.checkAccess(protectedObject)) {
-            response.setAccess(true);
+            access = true;
         }
 
-        response.setHash(response.generateHash(protectedObject));
-
-        return response;
+        return new ResponseSignUtil(protectedObject, access, Instant.now());
     }
 }

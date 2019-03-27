@@ -42,6 +42,8 @@ dependencies {
     testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // This common library contains in separate repo and must be included manually from that repo
+    compile files('libs/LicenseCommons-1.0-SNAPSHOT.jar')
 }
 
 dependencyManagement {
