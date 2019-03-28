@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.rtksoftlabs.LicenseCommons.inno.ProtectedObjectsServiceImpl;
-import ru.rtksoftlabs.LicenseCommons.services.FileService;
-import ru.rtksoftlabs.LicenseCommons.services.ProtectedObjectsService;
-import ru.rtksoftlabs.LicenseCommons.services.SignatureService;
-import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
+import ru.rtksoftlabs.LicenseCommons.services.*;
 import ru.rtksoftlabs.LicenseCommons.services.impl.FileServiceImpl;
+import ru.rtksoftlabs.LicenseCommons.services.impl.JsonMapperServiceImpl;
 import ru.rtksoftlabs.LicenseCommons.services.impl.SignatureServiceImpl;
 import ru.rtksoftlabs.LicenseCommons.services.impl.ZipLicenseServiceImpl;
 
@@ -46,6 +44,11 @@ public class AppConfig {
 
     @Value("${key.certificate.validity.days}")
     private int keyCertificateValidityDays;
+
+    @Bean
+    public JsonMapperService jsonMapperService() {
+        return new JsonMapperServiceImpl();
+    }
 
     @Bean
     public FileService fileService() {

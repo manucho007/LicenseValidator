@@ -15,10 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.rtksoftlabs.LicenseCommons.services.FileService;
-import ru.rtksoftlabs.LicenseCommons.services.ProtectedObjectsService;
-import ru.rtksoftlabs.LicenseCommons.services.SignatureService;
-import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
+import ru.rtksoftlabs.LicenseCommons.services.*;
 import ru.rtksoftlabs.LicenseCommons.util.License;
 import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.services.*;
@@ -55,6 +52,9 @@ public class LicenseValidatorControllerTest {
     @Autowired
     private ProtectedObjectsService protectedObjectsService;
 
+    @Autowired
+    private JsonMapperService jsonMapperService;
+
     private License license;
 
     @Before
@@ -69,7 +69,7 @@ public class LicenseValidatorControllerTest {
 
     @Test
     public void getLicenseInformationShouldReturnObjects() throws Exception {
-        String content = licenseInformationService.getJsonMapper().writeValueAsString(license);
+        String content = jsonMapperService.generateJson(license);
 
         mockMvc.perform(get("/api/license-information")
                 .accept(MediaType.APPLICATION_JSON))
@@ -83,7 +83,7 @@ public class LicenseValidatorControllerTest {
 
         Mockito.when(licenseInformationService.getNewSignedLicenseContainer()).thenReturn(signedLicenseContainerTest);
 
-        byte[] licenseBytes = licenseInformationService.toJson(license).getBytes();
+        byte[] licenseBytes = jsonMapperService.generateJson(license).getBytes();
 
         KeyPair keyPair = signatureService.generateKeyPair();
 
@@ -114,7 +114,7 @@ public class LicenseValidatorControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/api/install-license")
                 .file(firstFile).contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(licenseInformationService.toJson(license)))
+                .andExpect(content().json(jsonMapperService.generateJson(license)))
                 .andExpect(status().isOk());
     }
 }

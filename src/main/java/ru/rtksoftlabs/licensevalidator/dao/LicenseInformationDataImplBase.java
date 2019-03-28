@@ -3,6 +3,7 @@ package ru.rtksoftlabs.licensevalidator.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import ru.rtksoftlabs.LicenseCommons.services.FileService;
+import ru.rtksoftlabs.LicenseCommons.services.JsonMapperService;
 import ru.rtksoftlabs.LicenseCommons.shared.ProtectedObject;
 import ru.rtksoftlabs.LicenseCommons.util.License;
 import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
@@ -37,6 +38,9 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     @Autowired
     private CheckAccessService checkAccessService;
 
+    @Autowired
+    private JsonMapperService jsonMapperService;
+
     @Override
     public String getLicenseInnerFileName() {
         return licenseInnerFileName;
@@ -67,7 +71,7 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
             signedLicenseContainer.setSign(signatureBytes);
 
             if (licenseInformationService.validateLicense(signedLicenseContainer)) {
-                License license = licenseInformationService.mapToObject(licenseBytes);
+                License license = jsonMapperService.generateLicense(new String(licenseBytes));
 
                 if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
                     setLicense(license);

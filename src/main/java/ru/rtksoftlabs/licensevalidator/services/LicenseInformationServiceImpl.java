@@ -1,13 +1,9 @@
 package ru.rtksoftlabs.licensevalidator.services;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rtksoftlabs.LicenseCommons.services.FileService;
+import ru.rtksoftlabs.LicenseCommons.services.JsonMapperService;
 import ru.rtksoftlabs.LicenseCommons.services.SignatureService;
 import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
 import ru.rtksoftlabs.LicenseCommons.util.License;
@@ -35,29 +31,8 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
     @Autowired
     private CheckAccessService checkAccessService;
 
-    public License mapToObject(byte[] licenseBytes) throws IOException {
-        return mapToObject(new String(licenseBytes));
-    }
-
-    public String toJson(License license) throws JsonProcessingException {
-        return getJsonMapper().writeValueAsString(license);
-    }
-
-    @Override
-    public ObjectMapper getJsonMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-
-        return mapper;
-    }
-
-    public License mapToObject(String licenseString) throws IOException {
-        return getJsonMapper().readValue(licenseString, License.class);
-    }
+    @Autowired
+    private JsonMapperService jsonMapperService;
 
     public SignedLicenseContainer getNewSignedLicenseContainer() {
         return new SignedLicenseContainer();
@@ -88,7 +63,7 @@ public class LicenseInformationServiceImpl implements LicenseInformationService 
         if (validateLicense(signedLicenseContainer)) {
             String jsonString = new String(signedLicenseContainer.getLicense());
 
-            License license = mapToObject(jsonString);
+            License license = jsonMapperService.generateLicense(jsonString);
 
             if (checkAccessService.checkLicenseDates(license.getBeginDate(), license.getEndDate())) {
                 licenseInformationData.setLicense(license);
