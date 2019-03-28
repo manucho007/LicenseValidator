@@ -1,4 +1,4 @@
-package ru.rtksoftlabs.licensevalidator.services;
+package ru.rtksoftlabs.licensevalidator.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,8 @@ import ru.rtksoftlabs.LicenseCommons.services.ZipLicenseService;
 import ru.rtksoftlabs.LicenseCommons.util.License;
 import ru.rtksoftlabs.LicenseCommons.util.SignedLicenseContainer;
 import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationData;
+import ru.rtksoftlabs.licensevalidator.services.CheckAccessService;
+import ru.rtksoftlabs.licensevalidator.services.LicenseInformationService;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
