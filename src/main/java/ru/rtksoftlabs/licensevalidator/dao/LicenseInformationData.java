@@ -13,4 +13,5 @@ public interface LicenseInformationData {
     ConcurrentMap<String, LocalDate> getLicenseDates();
     String getLicenseInnerFileName();
     String getSignatureInnerFileName();
+    void loadLicense();
 }

@@ -8,7 +8,6 @@ import ru.rtksoftlabs.LicenseCommons.shared.ProtectedObject;
 import ru.rtksoftlabs.LicenseCommons.util.License;
 import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationDataImplBase;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,8 +17,8 @@ public class LicenseInformationDataImpl extends LicenseInformationDataImplBase {
     @Autowired
     private ProtectedObjectsService protectedObjectsService;
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void loadLicense() {
         List<ProtectedObject> protectedObjects = protectedObjectsService.getProtectedObjects();
 
         License license = new License();

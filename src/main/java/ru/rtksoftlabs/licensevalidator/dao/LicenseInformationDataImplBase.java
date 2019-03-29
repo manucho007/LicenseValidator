@@ -59,7 +59,8 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     }
 
     @PostConstruct
-    private void loadLicense() {
+    @Override
+    public void loadLicense() {
         try {
             SignedLicenseContainer signedLicenseContainer = new SignedLicenseContainer();
 
