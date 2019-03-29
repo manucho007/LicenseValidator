@@ -64,6 +64,8 @@ public class AppConfig {
     public SignatureService signatureService() {
         SignatureServiceImpl signatureService = new SignatureServiceImpl();
 
+        signatureService.setFileService(fileService());
+
         signatureService.setKeyCertificateName(keyCertificateName);
         signatureService.setKeyStoreName(keyStoreName);
         signatureService.setKeyAliasName(keyAliasName);
