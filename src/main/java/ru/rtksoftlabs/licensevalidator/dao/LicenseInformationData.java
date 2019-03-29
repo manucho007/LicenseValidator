@@ -10,8 +10,9 @@ public interface LicenseInformationData {
     License getLicense();
     void setLicense(License license);
     ConcurrentMap<String, List<String>> getProtectedObjects();
-    ConcurrentMap<String, LocalDate> getLicenseDates();
     String getLicenseInnerFileName();
     String getSignatureInnerFileName();
+    LocalDate getBeginDate();
+    LocalDate getEndDate();
     void loadLicense();
 }

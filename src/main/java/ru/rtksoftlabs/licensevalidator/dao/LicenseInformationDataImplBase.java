@@ -21,7 +21,9 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     private final License license;
 
     private final ConcurrentMap<String, List<String>> protectedObjects;
-    private final ConcurrentMap<String, LocalDate> licenseDates;
+
+    private volatile LocalDate beginDate;
+    private volatile LocalDate endDate;
 
     @Value("${license.inner.file.name}")
     private String licenseInnerFileName;
@@ -42,6 +44,16 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     private JsonMapperService jsonMapperService;
 
     @Override
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
+
+    @Override
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    @Override
     public String getLicenseInnerFileName() {
         return licenseInnerFileName;
     }
@@ -55,7 +67,6 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
         license = new License();
 
         protectedObjects = new ConcurrentHashMap<>();
-        licenseDates = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
@@ -89,11 +100,6 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     }
 
     @Override
-    public ConcurrentMap<String, LocalDate> getLicenseDates() {
-        return licenseDates;
-    }
-
-    @Override
     public License getLicense() {
         synchronized (license) {
             return license;
@@ -103,8 +109,8 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
     @Override
     public void setLicense(License license) {
         synchronized (this.license) {
-            licenseDates.put("beginDate", license.getBeginDate());
-            licenseDates.put("endDate", license.getEndDate());
+            beginDate = license.getBeginDate();
+            endDate = license.getEndDate();
 
             for (ProtectedObject protectedObject: license.getProtectedObjects()) {
                 protectedObjects.put(protectedObject.getData(), protectedObject.returnListOfStringsWithPathToAllLeafs());

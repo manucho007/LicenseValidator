@@ -8,7 +8,6 @@ import ru.rtksoftlabs.licensevalidator.services.CheckAccessService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,10 +52,8 @@ public class CheckAccessServiceImpl implements CheckAccessService {
     }
 
     private boolean checkDates() {
-        ConcurrentMap<String, LocalDate> licenseDates = licenseInformationData.getLicenseDates();
-
-        LocalDate beginDate = licenseDates.get("beginDate");
-        LocalDate endDate = licenseDates.get("endDate");
+        LocalDate beginDate = licenseInformationData.getBeginDate();
+        LocalDate endDate = licenseInformationData.getEndDate();
 
         return checkLicenseDates(beginDate, endDate);
     }
