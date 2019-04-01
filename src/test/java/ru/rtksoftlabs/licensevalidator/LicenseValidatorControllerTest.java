@@ -105,7 +105,7 @@ public class LicenseValidatorControllerTest {
 
         signedLicenseContainer.setZipFileName(signedLicenseContainerTest.getZipFileName());
 
-        Mockito.verify(fileService, Mockito.atLeastOnce()).load(any(String.class));
+        Mockito.verify(fileService, Mockito.never()).load(any(String.class));
 
         Mockito.verify(fileService, Mockito.never()).save(any(byte[].class), any(String.class));
 
