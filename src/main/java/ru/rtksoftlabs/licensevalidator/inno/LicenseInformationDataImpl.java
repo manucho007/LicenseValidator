@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import ru.rtksoftlabs.LicenseCommons.services.ProtectedObjectsService;
-import ru.rtksoftlabs.LicenseCommons.shared.ProtectedObject;
+import ru.rtksoftlabs.LicenseCommons.shared.ProtectedObjects;
 import ru.rtksoftlabs.LicenseCommons.util.License;
 import ru.rtksoftlabs.licensevalidator.dao.LicenseInformationDataImplBase;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Component
 @Profile("inno")
@@ -19,7 +18,7 @@ public class LicenseInformationDataImpl extends LicenseInformationDataImplBase {
 
     @Override
     public void loadLicense() {
-        List<ProtectedObject> protectedObjects = protectedObjectsService.getProtectedObjects();
+        ProtectedObjects protectedObjects = protectedObjectsService.getProtectedObjects();
 
         License license = new License();
 

@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -108,8 +109,8 @@ public class LicenseInformationDataImplBase implements LicenseInformationData {
 
             protectedObjects.clear();
 
-            for (ProtectedObject protectedObject: license.getProtectedObjects()) {
-                protectedObjects.put(protectedObject.getData(), protectedObject.returnListOfStringsWithPathToAllLeafs());
+            for (Map.Entry<String, ProtectedObject> protectedObjects: license.getProtectedObjects().getObjects().entrySet()) {
+                this.protectedObjects.put(protectedObjects.getKey(), protectedObjects.getValue().returnListOfStringsWithPathToAllLeafs());
             }
 
             this.license.setBeginDate(license.getBeginDate());
