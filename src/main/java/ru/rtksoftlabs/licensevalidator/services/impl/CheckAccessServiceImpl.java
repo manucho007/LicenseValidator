@@ -22,7 +22,7 @@ public class CheckAccessServiceImpl implements CheckAccessService {
         if (beginDate != null && endDate != null) {
             LocalDate now = LocalDate.now();
 
-            if (beginDate.isBefore(now) && endDate.isAfter(now)) {
+            if ((beginDate.isBefore(now) || beginDate.equals(now)) && endDate.isAfter(now)) {
                 return true;
             }
         }
