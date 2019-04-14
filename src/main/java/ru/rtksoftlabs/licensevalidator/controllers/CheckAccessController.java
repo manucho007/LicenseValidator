@@ -9,7 +9,7 @@ import ru.rtksoftlabs.licensevalidator.services.CheckAccessService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
-import java.time.Instant;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api")
@@ -36,6 +36,6 @@ public class CheckAccessController {
             access = true;
         }
 
-        return new CheckAccessResult(protectedObject, access, Instant.now());
+        return new CheckAccessResult(protectedObject, access, new Date());
     }
 }
